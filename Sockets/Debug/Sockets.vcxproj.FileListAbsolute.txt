@@ -1,0 +1,2 @@
+C:\Users\Tanner\Documents\Github\Simple-Multiplayer-Games\Debug\Sockets.pdb
+C:\Users\Tanner\Documents\Github\Simple-Multiplayer-Games\Sockets\Debug\Sockets.pdb
