@@ -1,3 +1,2 @@
-﻿  TicTacToe.cpp
-C:\Users\Tanner\Documents\Github\Simple-Multiplayer-Games\Tic Tac Toe\TicTacToe.cpp(10,22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+﻿  main.cpp
   Tic Tac Toe.vcxproj -> C:\Users\Tanner\Documents\Github\Simple-Multiplayer-Games\Debug\Tic Tac Toe.exe

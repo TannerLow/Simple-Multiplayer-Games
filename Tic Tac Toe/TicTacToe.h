@@ -14,6 +14,7 @@ public:
 	bool makePlay(int position, char piece);
 	void getBoard(char* out) const;
 	void setBoard(char* newBoard);
+	bool hasWon(char piece) const;
 
 	static void display(char* board);
 };

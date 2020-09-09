@@ -132,16 +132,16 @@ bool ServerSocket::closeListeningSocket() {
     closesocket(ListenSocket);
 
     // Receive until the peer shuts down the connection
-    do {
+    //do {
 
-        iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
-        if (iResult < 0){
-            // recv failed with error, use WSAGetLastError() for more details
-            shutdown();
-            return false;
-        }
+    //    iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
+    //    if (iResult < 0){
+    //        // recv failed with error, use WSAGetLastError() for more details
+    //        shutdown();
+    //        return false;
+    //    }
 
-    } while (iResult > 0);
+    //} while (iResult > 0);
 
     status = Status::Closed;
     return true;

@@ -38,7 +38,7 @@ void runAsClient() {
     std::string input;
     std::cout << "Server ip?\n> " << std::endl;
     std::getline(std::cin, input);
-    client.resolveServer(input.c_str());
+    client.resolveServer(input.c_str(), "25565");
 
     client.connect();
     //Recieve 'who goes first' data
@@ -46,18 +46,37 @@ void runAsClient() {
     bool isFirst = strcmp(received, "s") == 0;
     std::cout << (isFirst ? "You are first." : "You are second.") << std::endl;
     
-    if(!isFirst) {
-        //receive board info
+    if (isFirst) {
+        takeTurn(game, 'O');
+        game.getBoard(board);
+        game.display(board);
+        client.send(board);
+    }
+    for (int i = 0; i < 4; i++) {
         received = client.receive().recvbuf;
+        if (strcmp(received, "won") == 0) {
+            std::cout << "You lose" << std::endl;
+            break;
+        }
         game.setBoard(received);
         game.getBoard(board);
         game.display(board);
-    }
-    takeTurn(game, 'O');
-    game.getBoard(board);
-    game.display(board);
-    client.send(board);
 
+        takeTurn(game, 'O');
+        game.getBoard(board);
+        game.display(board);
+        if (game.hasWon('O')) {
+            client.send("won", true);
+            break;
+        }
+        else {
+            client.send(board);
+        }
+    }
+
+    char exit;
+    std::cout << "Enter to end." << std::endl;
+    std::cin >> exit;
     client.shutdown();
 }
 
@@ -73,7 +92,7 @@ void runAsServer() {
     //setup server socket
     ServerSocket server;
     server.startServer();
-    server.resolveServer();
+    server.resolveServer("25565");
     server.createListeningSocket();
     server.setupListeningSocket();
     std::cout << "Waiting for client to connect" << std::endl;
@@ -89,17 +108,36 @@ void runAsServer() {
         game.display(board);
         server.send(board);
     }
-    received = server.receive().recvbuf;
-    game.setBoard(received);
-    game.getBoard(board);
-    game.display(board);
+    for (int i = 0; i < 4; i++) {
+        received = server.receive().recvbuf;
+        if (strcmp(received, "won") == 0) {
+            std::cout << "You lose" << std::endl;
+            break;
+        }
+        game.setBoard(received);
+        game.getBoard(board);
+        game.display(board);
+
+        takeTurn(game, 'X');
+        game.getBoard(board);
+        game.display(board);
+        if (game.hasWon('X')) {
+            server.send("won", true);
+            break;
+        }
+        else {
+            server.send(board);
+        }
+    }
 
 
     //std::cout << server.receive().recvbuf << std::endl;
     //std::string input;
     //std::getline(std::cin, input);
     //server.send(input.c_str(), true);
-
+    char exit;
+    std::cout << "Enter to end." << std::endl;
+    std::cin >> exit;
     server.closeListeningSocket();
     server.shutdown();
 }

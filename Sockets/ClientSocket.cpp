@@ -118,12 +118,12 @@ bool ClientSocket::shutdown() {
     }
 
     // Receive until the peer closes the connection
-    do {
+    //do {
 
-        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-        // if < 0 then recv failed with error, use WSAGetLastError() for more details
+    //    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+    //    // if < 0 then recv failed with error, use WSAGetLastError() for more details
 
-    } while (iResult > 0);
+    //} while (iResult > 0);
 
     // cleanup
     closesocket(ConnectSocket);

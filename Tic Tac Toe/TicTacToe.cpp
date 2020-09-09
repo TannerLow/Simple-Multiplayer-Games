@@ -26,6 +26,20 @@ void TicTacToe::setBoard(char* newBoard) {
 	strncpy(board, newBoard, 9);
 }
 
+bool TicTacToe::hasWon(char piece) const {
+	if (board[0] == piece) {
+		if (board[4] == piece and board[8] == piece) return true;
+		if (board[1] == piece and board[2] == piece) return true;
+		if (board[3] == piece and board[6] == piece) return true;}
+	else if (board[1] == piece and board[4] == piece and board[7] == piece) return true;
+	else if (board[2] == piece) {
+		if (board[4] == piece and board[6] == piece) return true;
+		if (board[5] == piece and board[8] == piece) return true;}
+	else if (board[3] == piece and board[4] == piece and board[5] == piece) return true;
+	else if (board[6] == piece and board[7] == piece and board[8] == piece) return true;
+	return false;
+}
+
 void TicTacToe::display(char* board) {
 	for (int i = 0; i < 8; i++) {
 		std::cout << board[i] << (i % 3 == 2 ? "\n" : " | ");
